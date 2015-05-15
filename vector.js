@@ -16,9 +16,11 @@ exports.getDistance = function(v1, v2) {
  * The returned direction is from v1 to v2
  */	
 exports.getDirections = function(v1, v2) {
-	var theta = Math.acos((v2.x-v1.x)/exports.getDistance(v1,v2));
+	var hypotenuse = exports.getDistance(v1,v2);
+	var xTheta = Math.acos((v2.x-v1.x)/hypotenuse);
+	var yTheta = Math.asin((v2.y-v1.y)/hypotenuse);
 	return {
-		x: Math.abs(Math.cos(theta)) * ((v2.x > v1.x)?1:-1), 
-		y: Math.abs(Math.sin(theta)) * ((v2.y > v1.y)?1:-1)
+		x: Math.cos(xTheta), 
+		y: Math.sin(yTheta)
 	};
 };
