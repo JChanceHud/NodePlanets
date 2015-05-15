@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+		<script>
+
+		</script>
+	</head>
+	<body>
+		<canvas id="canvas" />
+		<script>
+			var planets = [];
+			var socket = io('http://localhost:3000');
+			socket.on('connection', function (data) {
+				console.log("connected");
+			});
+			var canvas = document.getElementById("canvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			var camera = {x:canvas.width/2,y:canvas.height/2};
+			socket.on('planetPositions', function(data) {
+				planets = data.planets;
+				draw();
+			});
+			function draw() {
+				var ctx = canvas.getContext("2d");
+				ctx.fillStyle = "#000000";
+				ctx.fillRect(0,0,canvas.width, canvas.height);
+				ctx.fillStyle = "#FFFFFF";
+				for (var x = 0; x < planets.length; x++) {
+					ctx.fillRect(planets[x].position.x+(camera.x), planets[x].position.y+(camera.y), planets[x].radius*2, planets[x].radius*2);
+				}
+			}
+		</script>
+	</body>
+</html>
