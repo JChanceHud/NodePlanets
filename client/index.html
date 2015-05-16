@@ -19,6 +19,7 @@
 			var camera = {x:canvas.width/2,y:canvas.height/2};
 			socket.on('planetPositions', function(data) {
 				planets = data.planets;
+				console.log(data.runtimeInfo);
 				draw();
 			});
 			function draw() {

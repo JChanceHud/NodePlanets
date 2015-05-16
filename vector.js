@@ -24,3 +24,7 @@ exports.getDirections = function(v1, v2) {
 		y: Math.sin(yTheta)
 	};
 };
+
+exports.getMagnitude = function(v1) {
+	return Math.sqrt(Math.pow(v1.x, 2) + Math.pow(v1.y, 2));
+};

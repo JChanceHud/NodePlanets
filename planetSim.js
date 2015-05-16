@@ -19,6 +19,7 @@ function step(delta) {
 		current.force = getForceVector(x);
 		current.velocity.x += (current.force.x/current.mass)*delta;
 		current.velocity.y += (current.force.y/current.mass)*delta;
+		if(x === 0) console.log(current.velocity);
 	}
 
 	for(x = 0; x < exports.planets.length; x++) {
@@ -53,12 +54,16 @@ function getForceVector(planetIndex) {
  * Game loop logic
  *
  */
-var tickRate = 1000/60; //denominator represents FPS
+var tickRate = 1000/10; //denominator represents FPS
 var previousTick = Date.now();
 
 //module wrapper function
 exports.setTickRate = function(t) {
 	tickRate = t;
+};
+
+exports.getTickRate = function() {
+	return tickRate;
 };
 
 exports.gameLoop = function () {
@@ -74,4 +79,27 @@ exports.gameLoop = function () {
 	} else {
 		setImmediate(exports.gameLoop);
 	}
+};
+
+/*
+ * Util function
+ *
+ */
+
+exports.getTotalMass = function() {
+	var totalMass = 0.0;
+	for(var x = 0; x < exports.planets.length; x++) {
+		totalMass += exports.planets[x].mass;
+	}
+	return totalMass;
+};
+
+exports.getTotalEnergy = function() {
+	var totalEnergy = 0.0;
+	for(var x = 0; x < exports.planets.length; x++) {
+		//kinetic energy
+		totalEnergy += (0.5) * exports.planets[x].mass * vector.getMagnitude(exports.planets[x].velocity);
+		//potential energy
+	}
+	return totalEnergy;
 };

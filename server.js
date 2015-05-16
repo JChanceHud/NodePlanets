@@ -21,7 +21,16 @@ io.on('connection', function (socket) {
 });
 
 setInterval(function() {
-	io.emit('planetPositions', {planets: planetSim.planets});
+	//data contains the planet info and diagnostic info
+	var data = {
+		planets: planetSim.planets,
+		runtimeInfo: [
+			"Stepping every " + planetSim.getTickRate() + " seconds.",
+			"Total mass: " + planetSim.getTotalMass() + "KG.",
+			"Total energy: " + planetSim.getTotalEnergy() + "Joules."
+		]
+	};
+	io.emit('planetPositions', data);
 }, 20);
 
 planetSim.initialize();
